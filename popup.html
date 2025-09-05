@@ -9,17 +9,28 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🕵️ 북마크 흥신소 🔍</h1>
+            <button class="theme-toggle" id="themeToggle">
+                <span class="theme-icon">🌙</span>
+            </button>
+            <h1>🕵️‍♂️ 북마크 흥신소 🔍</h1>
+            <div class="detective-badge">DETECTIVE AGENCY</div>
         </div>
         
         <div class="search-section">
-            <input type="text" id="searchInput" placeholder="키워드를 입력하세요..." autocomplete="off">
-            <button id="searchBtn">검색</button>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="단서를 입력하세요..." autocomplete="off">
+                <div class="autocomplete-dropdown" id="autocomplete"></div>
+            </div>
+            <button id="searchBtn">
+                <span class="magnifier">🔍</span>
+                수사 시작
+            </button>
         </div>
         
         <div class="results-section" id="results">
             <div class="empty-state">
-                <p>북마크를 찾고 계신가요?<br>키워드를 입력해보세요!</p>
+                <div class="case-folder">📁</div>
+                <p>잃어버린 북마크 사건 접수 중...<br>단서를 제공해주세요!</p>
             </div>
         </div>
     </div>
