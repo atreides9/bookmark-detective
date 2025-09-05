@@ -4,10 +4,21 @@ document.addEventListener('DOMContentLoaded', function() {
     const resultsContainer = document.getElementById('results');
     const themeToggle = document.getElementById('themeToggle');
     const autocompleteDropdown = document.getElementById('autocomplete');
+    const clearInput = document.getElementById('clearInput');
     
     // 테마 관리
     let currentTheme = localStorage.getItem('theme') || 'dark';
     document.body.setAttribute('data-theme', currentTheme);
+    
+    // 테마 아이콘 업데이트 함수
+    function updateThemeIcon() {
+        const icon = themeToggle.querySelector('.theme-icon');
+        if (icon) {
+            icon.textContent = currentTheme === 'dark' ? '🌙' : '☀️';
+        }
+    }
+    
+    // 초기 테마 아이콘 설정
     updateThemeIcon();
     
     // 자동완성을 위한 북마크 캐시
@@ -21,6 +32,12 @@ document.addEventListener('DOMContentLoaded', function() {
         '프로젝트': 'project', '문서': 'docs', '튜토리얼': 'tutorial',
         '가이드': 'guide', '블로그': 'blog', '뉴스': 'news', '검색': 'search'
     };
+    
+    // 검색기록 삭제 함수
+    function deleteSearchHistory(index) {
+        searchHistory.splice(index, 1);
+        localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+    }
     
     // 초기 북마크 로드
     loadAllBookmarks();
@@ -54,11 +71,6 @@ document.addEventListener('DOMContentLoaded', function() {
         updateThemeIcon();
     }
     
-    // 테마 아이콘 업데이트
-    function updateThemeIcon() {
-        const icon = themeToggle.querySelector('.theme-icon');
-        icon.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
-    }
     
     // 검색 실행 (한영 매핑 포함)
     function searchBookmarks() {
@@ -180,18 +192,37 @@ document.addEventListener('DOMContentLoaded', function() {
         header.textContent = '🕐 최근 수사 기록';
         autocompleteDropdown.appendChild(header);
         
-        searchHistory.slice(0, 5).forEach(item => {
+        searchHistory.slice(0, 5).forEach((item, index) => {
             const historyItem = document.createElement('div');
             historyItem.className = 'autocomplete-item history-item';
             historyItem.innerHTML = `
                 <span class="history-text">${item}</span>
-                <span class="history-icon">🔍</span>
+                <span class="history-actions">
+                    <span class="history-icon">🔍</span>
+                    <span class="history-delete" data-index="${index}">×</span>
+                </span>
             `;
-            historyItem.addEventListener('click', () => {
+            
+            // 검색 실행
+            historyItem.querySelector('.history-text').addEventListener('click', () => {
                 searchInput.value = item;
                 autocompleteDropdown.style.display = 'none';
                 searchBookmarks();
             });
+            
+            historyItem.querySelector('.history-icon').addEventListener('click', () => {
+                searchInput.value = item;
+                autocompleteDropdown.style.display = 'none';
+                searchBookmarks();
+            });
+            
+            // 삭제 기능
+            historyItem.querySelector('.history-delete').addEventListener('click', (e) => {
+                e.stopPropagation();
+                deleteSearchHistory(index);
+                showRecentSearches(); // 목록 새로고침
+            });
+            
             autocompleteDropdown.appendChild(historyItem);
         });
         
@@ -263,12 +294,41 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
     }
     
-    // 빈 상태 표시
+    // 빈 상태 메시지들
+    const emptyStateMessages = [
+        {
+            icon: '📁',
+            text: '잃어버린 북마크 사건 접수 중...<br>단서를 제공해주세요!'
+        },
+        {
+            icon: '🔍',
+            text: '미해결 북마크 사건이 쌓여있습니다...<br>키워드로 단서를 찾아보세요!'
+        },
+        {
+            icon: '📋',
+            text: '북마크 실종 신고를 기다리고 있습니다...<br>어떤 흔적을 찾고 계신가요?'
+        },
+        {
+            icon: '🕵️‍♂️',
+            text: '탐정이 대기 중입니다...<br>수사할 키워드를 알려주세요!'
+        },
+        {
+            icon: '💼',
+            text: '새로운 의뢰를 기다리는 중...<br>어떤 북마크를 찾아드릴까요?'
+        },
+        {
+            icon: '🗂️',
+            text: '사건 파일이 정리되어 있습니다...<br>검색어로 사건을 열어보세요!'
+        }
+    ];
+    
+    // 빈 상태 표시 (랜덤 메시지)
     function showEmptyState() {
+        const randomMessage = emptyStateMessages[Math.floor(Math.random() * emptyStateMessages.length)];
         resultsContainer.innerHTML = `
             <div class="empty-state">
-                <div class="case-folder">📁</div>
-                <p>잃어버린 북마크 사건 접수 중...<br>단서를 제공해주세요!</p>
+                <div class="case-folder">${randomMessage.icon}</div>
+                <p>${randomMessage.text}</p>
             </div>
         `;
     }
@@ -284,17 +344,43 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // 검색 필드 클릭 시 최근 검색내역 표시
-    searchInput.addEventListener('click', function() {
+    // 검색 필드 hover 시 최근 검색내역 표시
+    searchInput.addEventListener('mouseenter', function() {
         if (!searchInput.value.trim()) {
             showRecentSearches();
         }
     });
     
+    // 검색 필드에서 마우스 벗어날 때 숨김 (단, 포커스 상태가 아닐 때만)
+    searchInput.addEventListener('mouseleave', function() {
+        if (!searchInput.matches(':focus') && !searchInput.value.trim()) {
+            autocompleteDropdown.style.display = 'none';
+        }
+    });
+    
+    // 포커스 시에도 최근 검색내역 표시
     searchInput.addEventListener('focus', function() {
         if (!searchInput.value.trim()) {
             showRecentSearches();
         }
+    });
+    
+    // 입력 필드 지우기 버튼 표시/숨김
+    function toggleClearButton() {
+        if (searchInput.value.trim()) {
+            clearInput.style.display = 'flex';
+        } else {
+            clearInput.style.display = 'none';
+        }
+    }
+    
+    // 입력 필드 지우기 기능
+    clearInput.addEventListener('click', function() {
+        searchInput.value = '';
+        clearInput.style.display = 'none';
+        autocompleteDropdown.style.display = 'none';
+        showEmptyState();
+        searchInput.focus();
     });
     
     // 자동완성 및 실시간 검색
@@ -303,6 +389,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const query = searchInput.value.trim();
         
         clearTimeout(debounceTimer);
+        
+        // 지우기 버튼 표시/숨김
+        toggleClearButton();
         
         // 입력 시작하면 자동완성 표시 (최근 검색내역 숨김)
         if (query) {
@@ -329,6 +418,5 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // 포커스 설정
-    searchInput.focus();
+    // 포커스 설정 제거 - hover 시에만 최근 검색내역 표시
 });
