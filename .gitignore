@@ -1,0 +1,85 @@
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# IDE and Editor Files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# Logs and Debugging
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Runtime Data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Dependency Directories
+node_modules/
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Build Output
+dist/
+build/
+out/
+
+# Chrome Extension Specific
+*.crx
+*.pem
+key.pem
+*.zip
+extension.zip
+
+# Environment Variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Temporary Files
+*.tmp
+*.temp
+.cache/
+
+# Testing
+coverage/
+*.cover
+.coverage
+.pytest_cache/
+
+# Documentation
+docs/generated/
+
+# Security and Sensitive Files
+*.key
+*.crt
+*.p12
+secrets.json
+config.json
+private-key.json

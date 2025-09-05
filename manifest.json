@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "🕵️북마크 흥신소🔍",
+  "description": "키워드로 잃어버린 북마크를 찾아드립니다",
+  "version": "1.0",
+  "permissions": [
+    "bookmarks"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "북마크 흥신소"
+  }
+}
