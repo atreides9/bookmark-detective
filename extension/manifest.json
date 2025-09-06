@@ -9,9 +9,9 @@
   "action": {
     "default_popup": "popup.html",
     "default_title": "북마크 흥신소",
-    "default_icon": "detective.png"
+    "default_icon": "icon.png"
   },
   "icons": {
-    "128": "detective.png"
+    "128": "icon.png"
   }
 }
