@@ -108,7 +108,7 @@ class I18n {
                 evidenceUnknown: 'Unknown Evidence',
                 
                 // 자동완성
-                recentSearches: '🕐 Previous Investigations',
+                recentSearches: '🕐 Recent Cases',
                 
                 // 설정
                 settings: 'Settings',

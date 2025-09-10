@@ -203,7 +203,7 @@ body {
     padding: 8px 16px;
     cursor: pointer;
     transition: background 0.2s ease;
-    font-size: 13px;
+    font-size: 11px;
     color: var(--text-primary);
 }
 
@@ -215,7 +215,7 @@ body {
     padding: 8px 16px;
     background: var(--bg-secondary);
     color: var(--text-accent);
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 600;
     letter-spacing: 0.5px;
     border-bottom: 1px solid var(--border);
@@ -420,3 +420,4 @@ mark {
     background: var(--highlight);
     border-radius: 3px;
 }
+
