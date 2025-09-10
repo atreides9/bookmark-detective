@@ -63,7 +63,7 @@ class I18n {
                 subtitle: 'DETECTIVE AGENCY',
                 
                 // 검색
-                searchPlaceholder: 'Describe the missing bookmark...',
+                searchPlaceholder: 'Bookmark clues...',
                 searchButton: 'Find',
                 
                 // 빈 상태 메시지들
