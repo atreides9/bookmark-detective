@@ -80,6 +80,28 @@ body {
     transform: scale(1.1);
 }
 
+.lang-toggle {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    font-size: 16px;
+}
+
+.lang-toggle:hover {
+    background: var(--highlight);
+    transform: scale(1.1);
+}
+
 .header h1 {
     font-size: 20px;
     font-weight: 700;

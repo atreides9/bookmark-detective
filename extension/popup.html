@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>북마크 흥신소</title>
+    <title>Bookmark Detective</title>
     <link rel="stylesheet" href="popup.css">
 </head>
 <body>
@@ -12,30 +12,34 @@
             <button class="theme-toggle" id="themeToggle">
                 <span class="theme-icon">🌙</span>
             </button>
-            <h1>🕵️‍♂️ 북마크 흥신소 🔍</h1>
+            <button class="lang-toggle" id="langToggle">
+                <span class="lang-icon">🌐</span>
+            </button>
+            <h1>🕵️‍♂️ Sleuth 🔍</h1>
             <div class="detective-badge">DETECTIVE AGENCY</div>
         </div>
         
         <div class="search-section">
             <div class="search-container">
-                <input type="text" id="searchInput" placeholder="단서를 입력하세요..." autocomplete="off">
+                <input type="text" id="searchInput" placeholder="Describe the missing bookmark..." autocomplete="off">
                 <button class="clear-input" id="clearInput" style="display: none;">×</button>
                 <div class="autocomplete-dropdown" id="autocomplete"></div>
             </div>
             <button id="searchBtn">
                 <span class="magnifier">🔍</span>
-                수사 시작
+                Find
             </button>
         </div>
         
         <div class="results-section" id="results">
             <div class="empty-state">
-                <div class="case-folder">📁</div>
-                <p>잃어버린 북마크 사건 접수 중...<br>단서를 제공해주세요!</p>
+                <div class="case-folder">🔍</div>
+                <p>Case files ready for investigation...<br>What evidence shall we examine?</p>
             </div>
         </div>
     </div>
     
+    <script src="i18n.js"></script>
     <script src="popup.js"></script>
 </body>
 </html>
